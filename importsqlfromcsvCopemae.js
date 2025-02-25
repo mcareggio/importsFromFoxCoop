@@ -1,5 +1,4 @@
 import { DBFFile } from "dbffile";
-console.log("Arrnaca");
 import * as mysql from "mysql";
 import * as fs from "fs";
 
@@ -20,7 +19,7 @@ let records;
 async function batchRead() {
   let dbf = await DBFFile.open("./copemae.dbf");
   console.log(`DBF file contains ${dbf.recordCount} records.`);
-  console.log(`Field names: ${dbf.fields.map((f) => f.name).join(", ")}`);
+  //console.log(`Field names: ${dbf.fields.map((f) => f.name).join(", ")}`);
   records = await dbf.readRecords();
   console.log(records.length);
   guardarEnLaBBDD();

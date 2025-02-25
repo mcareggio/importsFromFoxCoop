@@ -27,7 +27,7 @@ crearDeudaSQL(skiprecords);
 async function crearDeudaSQL(skiprecords) {
   let dbf = await DBFFile.open("./deuda.dbf");
   console.log(`DBF file contains ${dbf.recordCount} records.`);
-  console.log(`Field names: ${dbf.fields.map((f) => f.name).join(", ")}`);
+  // console.log(`Field names: ${dbf.fields.map((f) => f.name).join(", ")}`);
   console.log("skiping " + skiprecords + " recors");
   await dbf.readRecords(skiprecords); //Arranca del registro 150 mil para no tomar los primeror
   records = await dbf.readRecords();
