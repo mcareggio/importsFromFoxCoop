@@ -19,7 +19,6 @@ let records;
 async function batchRead() {
   let dbf = await DBFFile.open("./copemae.dbf");
   console.log(`DBF file contains ${dbf.recordCount} records.`);
-  //console.log(`Field names: ${dbf.fields.map((f) => f.name).join(", ")}`);
   records = await dbf.readRecords();
   console.log(records.length);
   guardarEnLaBBDD();
@@ -30,7 +29,7 @@ function guardarEnLaBBDD() {
   con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
-    var sql_truncate = "TRUNCATE TABLE copemae";
+    var sql_truncate = "SELECT * FROM COPEMAE LIMIT 1";
     con.query(sql_truncate, null, function (err, result) {
       if (err) throw err;
       {
@@ -52,7 +51,7 @@ function guardarEnLaBBDD() {
             "," +
             record.SUBFOLIO +
             ",'" +
-            record.NOMBRE +
+            formatearCaracteresEspeciales(record.NOMBRE) +
             "','" +
             record.DIR_CORREO +
             "','" +
@@ -87,4 +86,10 @@ function convertirFecha(fecha) {
   fecha = fecha.getFullYear() + "-" + mes + "-" + dia;
 
   return fecha;
+}
+function formatearCaracteresEspeciales(string) {
+  string = string.replace("¥", "N");
+  string = string.replace("Ñ", "N");
+  string = string.replace("ñ", "n");
+  return string;
 }
